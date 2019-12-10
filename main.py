@@ -9,46 +9,86 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def hello():
     save_path = load_path()
-    print(save_path)
     images = os.listdir(save_path)
     # v pom je napisana iba cesta "static\obrazky\.."
     # pom odstranuje nepotrebne pismena cesty
     pom = save_path[59:] + "/"
+    # textak kde sa budu ukladat pole obrazkov + cesta
 
+    # subor kde sa uklada pomocna cesta
+    with open("pomocna_cesta.txt", "a+") as f:
+        f.writelines(save_path)
+        f.writelines("\n")
+        f.close()
+
+    # pomocny subor do ktoreho sa ukladaju vsetky obrazky ktore sa anotuju
+    with open("pomocny_file.txt", "a+") as file:
+        file.writelines(["%s\n" % item  for item in images])
+        file.writelines("koniec" + '\n')
+        file.close()
 
     if request.method == 'POST':
-        print(images)
+        #print("TERAZ SOM PRECITAL PRVY DRUHY RIADOK-------------------------------------")
+        list_druhy = []
+        # nacitanie pomocneho filu
+        with open("pomocny_file.txt", "r") as file:
+            prvy_riadok = file.read().splitlines()
+            file.close()
+        for item in prvy_riadok:
+            if item != 'koniec':
+                list_druhy.append(item)
+            else:
+                break
+
+        with open("pomocna_cesta.txt", "r") as file:
+            ulozena_cesta_list = file.read().splitlines()
+            ulozena_cesta = ulozena_cesta_list[0]
+            file.close()
+
+        #print(ulozena_cesta)
+        #print(list_druhy)
         pom_list = request.form.getlist('mycheckbox')
-        print(pom_list)
-        final_images = [x for x in images if x not in pom_list]
-        print("TOTO JE FINAL OBRAZKY KTORE SOM ONANOTOVAL")
-        print(final_images)
+        #print(pom_list)
+        # final_images je vsetky obrazky - obrazky ktore boli odskrtnute
+        final_images = [x for x in list_druhy if x not in pom_list]
 
         if request.form['submit_value'] == 'bus':
-            print('Stlacil si bus tlacidlo')
-            annote(save_path, final_images, 'bus')
+            annote(ulozena_cesta, final_images, 'bus')
 
         elif request.form['submit_value'] == 'truck':
-            print('Stlacil si TRUCK tlacidlo')
-            annote(save_path, final_images, 'truck')
+            annote(ulozena_cesta, final_images, 'truck')
 
         elif request.form['submit_value'] == 'minitruck':
-            print('Stlacil si MINITRUCK tlacidlo')
-            annote(save_path, final_images, 'minitruck')
+            annote(ulozena_cesta, final_images, 'minitruck')
 
         elif request.form['submit_value'] == 'car':
-            print('Stlacil si CAR tlacidlo')
-            annote(save_path, final_images, "car")
+            annote(ulozena_cesta, final_images, "car")
 
         elif request.form['submit_value'] == 'van':
-            print('Stlacil si VAN tlacidlo')
-            annote(save_path, final_images, 'van')
+            annote(ulozena_cesta, final_images, 'van')
 
         elif request.form['submit_value'] == 'minivan':
-            print('Stlacil si MINIVAN tlacidlo')
-            annote(save_path, final_images, 'minivan')
-        return render_template('main.html', images=images, pathh=pom)
+            annote(ulozena_cesta, final_images, 'minivan')
 
+
+        # nacitanie pomocneho aby sa odstranili uz vytvorene anotacie
+        with open("pomocny_file.txt", "r+") as file:
+            li = file.read().splitlines()
+            del li[:li.index('koniec')+1]
+            file.close()
+
+        # prepisanie pomocneho suboru
+        with open("pomocny_file.txt", "w") as file:
+            file.writelines(["%s\n" % item for item in li])
+            file.close()
+        with open('pomocna_cesta.txt', 'r') as fin:
+            data = fin.read().splitlines(True)
+            fin.close()
+        with open('pomocna_cesta.txt', 'w') as fout:
+            fout.writelines(data[1:])
+            fout.close()
+
+        return render_template('main.html', images=images, pathh=pom)
     return render_template('main.html', images=images, pathh=pom)
 
 
@@ -62,12 +102,11 @@ def load_path():
         filename = r'E:\VUT\7.semester(4 rocnik)\Python ucenie\Anotacny nastroj\priecinky.txt'
         random_lines = random.choice(open(filename).readlines())
         pom_list = os.listdir(random_lines.strip('\n'))
-        print("Teraz som spracuvava priecinok:" + random_lines.strip('\n'))
+        #print("Teraz som spracuvava priecinok:" + random_lines.strip('\n'))
         if 'annot.json' in pom_list:
             print("V TOMTO PRIECINKU SI UZ BOL REKURZIVNE VOLAM TU ISTU FUNKCIU")
-            return True
+            return load_path()
         else:
-            print(pom_list)
             return random_lines.strip('\n')
     except Exception:
         return load_path()
@@ -82,8 +121,6 @@ def annote(patth,images,name_type):
     cesta = patth + "\\"
     for item in images:
         final.update({item: name_type})
-    app_json = json.dumps(final)
-    print(app_json)
     # Zapisanie dict do jsonu v tvare {'nazov_obrazka': 'nazov_typu'}
     with open(cesta + 'annot.json', 'w') as fp:
         json.dump(final, fp)
