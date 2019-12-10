@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <title>Anotačný nástroj</title>
+</head>
+<body>
+<div class="header">
+    <h1> Anotačný nástroj</h1>
+    <p>Odstráň tie obrázky, ktoré nepatria ku typu vozidla a dole potvrď tlačidlom</p>
+
+</div>
+<div class="container">
+    <ul>
+        <form method="POST" action="/">
+            {% for image in images %}
+            <li>
+                <input type="checkbox" id={{image}} value={{image}} name="mycheckbox"/>
+                <label for={{image}}> <img src="{{pathh}}{{image}}" name={{image}}/>
+                </label>
+            </li>
+            {% endfor %}
+
+            <div class = "buttons">
+            <button type="submit" name="submit_value" value="bus">
+                <img src="static/pictograms/bus2.png"/>
+                <p>Autobus</p>
+            </button>
+
+            <button type="submit" name="submit_value" value="truck">
+                <img src="static/pictograms/truck.png"/>
+                <p>Kamión</p>
+            </button>
+
+            <button type="submit" name="submit_value" value="minitruck">
+                <img src="static/pictograms/minitruck.png"/>
+                <p>Nákladiak </p>
+            </button>
+
+            <button type="submit" name="submit_value" value="car">
+                <img src="static/pictograms/car.png"/>
+                <p>Osobné auto</p>
+            </button>
+
+
+            <button type="submit" name="submit_value" value="van">
+                <img src="static/pictograms/van.png"/>
+                <p>Dodávka</p>
+            </button>
+
+            <button type="submit" name="submit_value" value="minivan">
+                <img src="static/pictograms/minivan.png"/>
+                <p>Mini dodávka</p>
+            </button>
+            </div>
+
+        </form>
+    </ul>
+</div>
+
+</div>
+
+<div class="footer">
+    <p> xcabal06 © 2019 </p>
+</div>
+</body>
+</html>
