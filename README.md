@@ -1,4 +1,4 @@
-# Anotacny-nastroj
+# Anotačný-nástroj
 Anotačný nástroj slúži na anotovanie obrázkov typu vozidla pre moju BP
 
 Pre správne fungovanie, treba nainštalovať enviroment python FLASK
