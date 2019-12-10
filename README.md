@@ -12,4 +12,4 @@ Absolútne cesty obrazkov musia mať tvar aký je uvedený v priečinky.txt
 Pred prvým ostrím spustením treba, vymazať pomocne pomocny_file.txt a pomocna_cesta.txt
 Slúži to pre správny chod stránky a anotovania
 
-Na lolálke u mňa stránka beží v poriadku a funkčne
+Na lokálke u mňa stránka beží v poriadku a funkčne
