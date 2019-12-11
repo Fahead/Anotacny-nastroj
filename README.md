@@ -17,5 +17,7 @@ Na lokálke u mňa stránka beží v poriadku a funkčne
 
 
 ![Annot_1](https://github.com/Fahead/Anotacny-nastroj/blob/Final_22-28/static/annot_git1.PNG)
+obr. 1)
 
 ![Annot_2](https://github.com/Fahead/Anotacny-nastroj/blob/Final_22-28/static/annot_git2.PNG)
+obr. 2)
