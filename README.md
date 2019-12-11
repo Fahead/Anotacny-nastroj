@@ -16,5 +16,5 @@ Na lokálke u mňa stránka beží v poriadku a funkčne
 
 
 
-![Annot_1](static/annot_git1.png)
+![Annot_1](Anotacny-nastroj/static/annot_git1.png)
 Format: ![Alt Text](url)
