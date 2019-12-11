@@ -15,5 +15,6 @@ Slúži to pre správny chod stránky a anotovania
 Na lokálke u mňa stránka beží v poriadku a funkčne
 
 
-![Annot_1](/static/annot_git1.png)
+
+![Annot_1](static/annot_git1.png)
 Format: ![Alt Text](url)
