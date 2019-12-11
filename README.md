@@ -13,3 +13,7 @@ Pred prvým ostrím spustením treba, vymazať pomocne pomocny_file.txt a pomocn
 Slúži to pre správny chod stránky a anotovania
 
 Na lokálke u mňa stránka beží v poriadku a funkčne
+
+
+![Annot_1](/static/annot_git1.png)
+Format: ![Alt Text](url)
