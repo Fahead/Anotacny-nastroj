@@ -11,16 +11,18 @@
     <p>Odstráň tie obrázky, ktoré nepatria ku typu vozidla a dole potvrď tlačidlom</p>
 
 </div>
-<div class="container">
+<div class="container">    
     <ul>
         <form method="POST" action="/">
             {% for image in images %}
             <li>
-                <input type="checkbox" id={{image}} value={{image}} name="mycheckbox"/>
+                <div id = "list_images">
+                <input type="checkbox" id={{pathh}} value={{image}} name="mycheckbox"/>
                 <label for={{image}}> <img src="{{pathh}}{{image}}" name={{image}}/>
                 </label>
+            </div>
             </li>
-            {% endfor %}
+            {% endfor %}       
 
             <div class = "buttons">
             <button type="submit" name="submit_value" value="bus">
@@ -64,5 +66,7 @@
 <div class="footer">
     <p> xcabal06 © 2019 </p>
 </div>
+
+<script src="static/js/script.js"></script>
 </body>
 </html>
